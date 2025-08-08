@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if error %}Error - Cricket Insights Hub{% else %}{{ article.title }} - Cricket Insights Hub{% endif %}
+{% endblock %}
+
+{% block content %}
+<article class="max-w-4xl mx-auto bg-white rounded shadow p-6">
+    {% if error %}
+        <p class="text-red-600 text-center">{{ error }}</p>
+    {% else %}
+        <header class="mb-6">
+            <h1 class="text-4xl font-bold mb-4 text-gray-900 leading-tight">{{ article.title }}</h1>
+            <div class="flex flex-wrap items-center text-sm text-gray-600 mb-4">
+                <span class="mr-4">
+                    <i class="fas fa-user mr-1"></i>
+                    By <span class="font-semibold">{{ article.author|default:"Unknown" }}</span>
+                </span>
+                <span class="mr-4">
+                    <i class="fas fa-calendar mr-1"></i>
+                    Published on {{ article.publishedAt|date:"F j, Y, g:i a" }}
+                </span>
+                <span class="mr-4">
+                    <i class="fas fa-globe mr-1"></i>
+                    Source: <span class="font-semibold">{{ article.source.name }}</span>
+                </span>
+            </div>
+            
+            <!-- Description/Summary -->
+            {% if article.description %}
+                <div class="bg-gray-50 border-l-4 border-blue-500 p-4 mb-6">
+                    <p class="text-lg text-gray-700 italic">{{ article.description }}</p>
+                </div>
+            {% endif %}
+        </header>
+
+        {% if article.urlToImage %}
+            <div class="mb-6">
+                <img src="{{ article.urlToImage }}" 
+                     alt="Image for {{ article.title }}" 
+                     class="w-full rounded-lg shadow-md object-cover max-h-96" />
+            </div>
+        {% endif %}
+
+        <!-- Full Article Content -->
+        <section class="prose prose-lg max-w-none text-gray-800 mb-8">
+            {% if article.full_content %}
+                <div class="article-content">
+                    {{ article.full_content|linebreaks }}
+                </div>
+                
+                <!-- Success indicator for debugging -->
+                {% if article.scraping_method %}
+                    <div class="mt-6 p-3 bg-green-50 border border-green-200 rounded-md text-sm text-green-700">
+                        <i class="fas fa-check-circle mr-1"></i>
+                        Full article content loaded successfully via {{ article.scraping_method }}
+                        {% if article.word_count %}
+                            ({{ article.word_count }} words)
+                        {% endif %}
+                    </div>
+                {% endif %}
+            {% else %}
+                <!-- Fallback content -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-md p-4 mb-4">
+                    <p class="text-yellow-700 text-sm mb-2">
+                        <i class="fas fa-exclamation-triangle mr-1"></i>
+                        Full article content could not be loaded. 
+                        {% if article.scraping_error %}
+                            ({{ article.scraping_error }})
+                        {% endif %}
+                        Showing available summary:
+                    </p>
+                </div>
+                
+                <div class="fallback-content">
+                    <p>{{ article.content|default:"Content not available."|linebreaks }}</p>
+                </div>
+            {% endif %}
+        </section>
+
+        <!-- Article Footer -->
+        <footer class="border-t pt-6">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                <div class="mb-4 sm:mb-0">
+                    <a href="{{ article.url }}" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+                        <i class="fas fa-external-link-alt mr-2"></i>
+                        Read Original Article
+                    </a>
+                </div>
+                
+                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                    <button onclick="window.history.back()" 
+                            class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Back to News
+                    </button>
+                    
+                    <button onclick="window.print()" 
+                            class="inline-flex items-center px-3 py-2 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+                        <i class="fas fa-print mr-2"></i>
+                        Print
+                    </button>
+                </div>
+            </div>
+        </footer>
+    {% endif %}
+</article>
+
+<!-- Custom styles for better article readability -->
+<style>
+    .article-content p {
+        margin-bottom: 1.2rem;
+        line-height: 1.7;
+        text-align: justify;
+    }
+    
+    .article-content p:first-child {
+        font-size: 1.1rem;
+        font-weight: 500;
+    }
+    
+    @media print {
+        .bg-green-50, .border-t, footer {
+            display: none;
+        }
+        
+        .article-content {
+            font-size: 12pt;
+            line-height: 1.5;
+        }
+    }
+</style>
+{% endblock %}

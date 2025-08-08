@@ -1,0 +1,495 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+
+{% block title %}Home - Cricket Insights Hub{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="relative bg-gradient-to-r from-cricket-green via-cricket-light-green to-cricket-blue text-white overflow-hidden">
+    <div class="absolute inset-0 bg-black opacity-20"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                Welcome to the Ultimate
+                <span class="text-cricket-gold">Cricket Analytics</span> Platform
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto text-gray-100">
+                Explore comprehensive player statistics, compare cricket legends, predict match outcomes, and join a thriving community of cricket enthusiasts.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="{% url 'player_stats' %}" class="bg-cricket-gold hover:bg-yellow-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-chart-bar mr-2"></i>
+                    Explore Player Stats
+                </a>
+                <a href="{% url 'community' %}" class="bg-transparent border-2 border-white hover:bg-white hover:text-cricket-green text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-users mr-2"></i>
+                    Join Community
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Decorative cricket elements -->
+    <div class="absolute top-10 left-10 opacity-10">
+        <i class="fas fa-cricket text-6xl"></i>
+    </div>
+    <div class="absolute bottom-10 right-10 opacity-10">
+        <i class="fas fa-trophy text-8xl"></i>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                Everything Cricket in One Place
+            </h2>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Discover powerful analytics tools and insights that bring you closer to the game you love.
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="feature-card bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+                <div class="bg-cricket-blue text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user-friends text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Player Statistics</h3>
+                <p class="text-gray-600">Comprehensive stats for cricket players across all formats and eras.</p>
+                <a href="{% url 'player_stats' %}" class="text-cricket-blue hover:text-blue-700 font-medium mt-3 inline-block">
+                    Explore Stats <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="feature-card bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+                <div class="bg-cricket-light-green text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-balance-scale text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Player Comparison</h3>
+                <p class="text-gray-600">Compare your favorite players side by side with detailed analytics.</p>
+                <a href="{% url 'player_comparison' %}" class="text-cricket-light-green hover:text-green-600 font-medium mt-3 inline-block">
+                    Compare Now <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="feature-card bg-gradient-to-br from-orange-50 to-orange-100 p-6 rounded-xl text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+                <div class="bg-cricket-gold text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-chart-line text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Match Predictions</h3>
+                <p class="text-gray-600">AI-powered predictions based on historical data and analytics.</p>
+                <a href="{% url 'match_prediction' %}" class="text-cricket-gold hover:text-orange-500 font-medium mt-3 inline-block">
+                    Predict Matches <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+            
+            <div class="feature-card bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl text-center hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+                <div class="bg-purple-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-users text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Community Hub</h3>
+                <p class="text-gray-600">Connect with fellow cricket fans and share your insights.</p>
+                <a href="{% url 'community' %}" class="text-purple-600 hover:text-purple-700 font-medium mt-3 inline-block">
+                    Join Discussion <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Latest Cricket News Section -->
+<section class="py-16 bg-gradient-to-br from-gray-50 to-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-newspaper text-cricket-green mr-3"></i>
+                Latest Cricket News
+            </h2>
+            <p class="text-xl text-gray-600">
+                Stay updated with the latest happenings in the cricket world
+            </p>
+        </div>
+
+        {% if news_articles %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for article in news_articles %}
+                <article class="news-card bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
+                    {% if article.urlToImage %}
+                        <div class="relative overflow-hidden h-48">
+                            <img src="{{ article.urlToImage }}" 
+                                 alt="News Image" 
+                                 class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <span class="bg-cricket-green text-white px-3 py-1 rounded-full text-xs font-medium">
+                                    {{ article.source.name }}
+                                </span>
+                            </div>
+                        </div>
+                    {% endif %}
+                    
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-500 mb-3">
+                            <i class="fas fa-calendar-alt mr-2 text-cricket-green"></i>
+                            <time>{{ article.publishedAt|date:"M d, Y" }}</time>
+                            <span class="mx-2">•</span>
+                            <i class="fas fa-clock mr-2 text-cricket-green"></i>
+                            <span>{{ article.publishedAt|date:"g:i A" }}</span>
+                        </div>
+                        
+                        <h3 class="text-xl font-bold text-gray-900 mb-3 line-clamp-2 hover:text-cricket-green transition-colors">
+                            <a href="{% url 'news_detail' %}?url={{ article.url | urlsafe_base64_encode }}" 
+                               class="block hover:underline"
+                               rel="noopener noreferrer">
+                                {{ article.title }}
+                            </a>
+                        </h3>
+                        
+                        {% if article.description %}
+                            <p class="text-gray-600 text-sm line-clamp-3 mb-4">
+                                {{ article.description }}
+                            </p>
+                        {% endif %}
+                        
+                        <div class="flex items-center justify-between">
+                            <a href="{% url 'news_detail' %}?url={{ article.url | urlsafe_base64_encode }}" 
+                               class="inline-flex items-center text-cricket-green hover:text-cricket-light-green font-medium text-sm transition-colors">
+                                Read Full Article
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                            
+                            <div class="flex items-center space-x-2">
+                                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" title="Share">
+                                    <i class="fas fa-share-alt text-gray-400 hover:text-cricket-green"></i>
+                                </button>
+                                <button class="p-2 hover:bg-gray-100 rounded-full transition-colors" title="Bookmark">
+                                    <i class="fas fa-bookmark text-gray-400 hover:text-cricket-gold"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            
+            <!-- View All News Button -->
+            <div class="text-center mt-12">
+                <a href="#" class="bg-cricket-green hover:bg-green-700 text-white px-8 py-3 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <i class="fas fa-newspaper mr-2"></i>
+                    View All Cricket News
+                </a>
+            </div>
+        {% else %}
+            <div class="text-center py-12">
+                <div class="bg-white rounded-xl p-8 shadow-lg max-w-md mx-auto">
+                    <i class="fas fa-newspaper text-gray-300 text-6xl mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-700 mb-2">No News Available</h3>
+                    <p class="text-gray-500">We're working on bringing you the latest cricket news. Please check back later!</p>
+                    <button onclick="window.location.reload()" class="mt-4 bg-cricket-green hover:bg-green-700 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors">
+                        <i class="fas fa-refresh mr-2"></i>
+                        Refresh Page
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Stats Highlight Section -->
+<section class="py-16 bg-cricket-green text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                Cricket Insights Hub by the Numbers
+            </h2>
+            <p class="text-xl text-green-100">
+                Trusted by cricket fans worldwide
+            </p>
+        </div>
+        
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold text-cricket-gold mb-2">10K+</div>
+                <div class="text-green-100">Player Profiles</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold text-cricket-gold mb-2">50K+</div>
+                <div class="text-green-100">Match Records</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold text-cricket-gold mb-2">1M+</div>
+                <div class="text-green-100">Data Points</div>
+            </div>
+            <div class="text-center">
+                <div class="text-4xl md:text-5xl font-bold text-cricket-gold mb-2">24/7</div>
+                <div class="text-green-100">Live Updates</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+            Ready to Dive into Cricket Analytics?
+        </h2>
+        <p class="text-xl text-gray-600 mb-8">
+            Join thousands of cricket enthusiasts who rely on our platform for comprehensive cricket insights and analytics.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="{% url 'player_stats' %}" class="bg-cricket-green hover:bg-green-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                <i class="fas fa-chart-bar mr-2"></i>
+                Start Exploring Stats
+            </a>
+            <a href="{% url 'match_prediction' %}" class="bg-cricket-gold hover:bg-yellow-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+                <i class="fas fa-crystal-ball mr-2"></i>
+                Try Match Prediction
+            </a>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Custom CSS for enhanced styling */
+    .line-clamp-2 {
+        display: -webkit-box;
+        /* -webkit-line-clamp: 2; */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .line-clamp-3 {
+        display: -webkit-box;
+        /* -webkit-line-clamp: 3; */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    
+    .feature-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .feature-card:hover {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .news-card {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .news-card:hover {
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    /* Gradient text animation */
+    @keyframes gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    .animate-gradient {
+        background: linear-gradient(-45deg, #1B5E20, #4CAF50, #FF9800, #1976D2);
+        background-size: 400% 400%;
+        animation: gradient-shift 15s ease infinite;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    /* Smooth scroll behavior */
+    html {
+        scroll-behavior: smooth;
+    }
+    
+    /* Loading animation for images */
+    .news-card img {
+        transition: opacity 0.3s ease-in-out;
+    }
+    
+    .news-card img:not([src]) {
+        opacity: 0;
+    }
+    
+    /* Hover effects for interactive elements */
+    .news-card:hover .fas {
+        transform: scale(1.1);
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    /* Custom scrollbar for webkit browsers */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #1B5E20;
+        border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: #4CAF50;
+    }
+    
+    /* Mobile optimizations */
+    @media (max-width: 768px) {
+        .feature-card {
+            padding: 1.5rem;
+        }
+        
+        .news-card {
+            margin-bottom: 1rem;
+        }
+        
+        .hero-section h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
+        }
+    }
+    
+    /* Focus states for accessibility */
+    .feature-card:focus-within,
+    .news-card:focus-within {
+        outline: 2px solid #1B5E20;
+        outline-offset: 2px;
+    }
+    
+    /* Button hover effects */
+    button:hover, .btn:hover {
+        transform: translateY(-2px);
+        transition: transform 0.2s ease-in-out;
+    }
+    
+    /* Pulse animation for call-to-action buttons */
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(27, 94, 32, 0.7); }
+        70% { box-shadow: 0 0 0 10px rgba(27, 94, 32, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(27, 94, 32, 0); }
+    }
+    
+    .pulse-green {
+        animation: pulse 2s infinite;
+    }
+</style>
+
+<script>
+    // Add smooth scrolling and interactive features
+    document.addEventListener('DOMContentLoaded', function() {
+        // Lazy loading for images
+        const images = document.querySelectorAll('img[src]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.style.opacity = '1';
+                    observer.unobserve(img);
+                }
+            });
+        });
+        
+        images.forEach(img => {
+            imageObserver.observe(img);
+        });
+        
+        // Add click analytics (you can integrate with your analytics service)
+        const trackClick = (element, action) => {
+            console.log(`User clicked: ${action}`);
+            // Add your analytics code here
+        };
+        
+        // Track feature card clicks
+        document.querySelectorAll('.feature-card a').forEach(link => {
+            link.addEventListener('click', () => {
+                trackClick(link, `Feature: ${link.textContent.trim()}`);
+            });
+        });
+        
+        // Track news article clicks
+        document.querySelectorAll('.news-card a').forEach(link => {
+            link.addEventListener('click', () => {
+                trackClick(link, 'News Article Click');
+            });
+        });
+        
+        // Add loading states for news cards
+        const newsCards = document.querySelectorAll('.news-card');
+        newsCards.forEach(card => {
+            card.addEventListener('click', function() {
+                const link = this.querySelector('a');
+                if (link) {
+                    // Add loading spinner or indication
+                    const loadingSpinner = document.createElement('div');
+                    loadingSpinner.className = 'absolute inset-0 bg-white bg-opacity-75 flex items-center justify-center';
+                    loadingSpinner.innerHTML = '<i class="fas fa-spinner fa-spin text-cricket-green text-2xl"></i>';
+                    this.style.position = 'relative';
+                    this.appendChild(loadingSpinner);
+                }
+            });
+        });
+        
+        // Animate numbers in stats section
+        const animateNumbers = () => {
+            const numberElements = document.querySelectorAll('[data-count]');
+            const observerOptions = { threshold: 0.5 };
+            
+            const numberObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        const targetNumber = parseInt(element.getAttribute('data-count'));
+                        let currentNumber = 0;
+                        const increment = targetNumber / 50;
+                        
+                        const updateNumber = () => {
+                            currentNumber += increment;
+                            if (currentNumber < targetNumber) {
+                                element.textContent = Math.floor(currentNumber).toLocaleString() + '+';
+                                requestAnimationFrame(updateNumber);
+                            } else {
+                                element.textContent = targetNumber.toLocaleString() + '+';
+                            }
+                        };
+                        
+                        updateNumber();
+                        numberObserver.unobserve(element);
+                    }
+                });
+            }, observerOptions);
+            
+            numberElements.forEach(el => numberObserver.observe(el));
+        };
+        
+        // Initialize number animation
+        animateNumbers();
+        
+        // Add search functionality (if you want to add a search bar later)
+        const addSearchFunctionality = () => {
+            // This can be expanded to include live search
+            console.log('Search functionality ready to be implemented');
+        };
+        
+        addSearchFunctionality();
+    });
+    
+    // Service Worker for offline functionality (optional)
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((registration) => {
+                    console.log('SW registered: ', registration);
+                })
+                .catch((registrationError) => {
+                    console.log('SW registration failed: ', registrationError);
+                });
+        });
+    }
+</script>
+
+{% endblock %}

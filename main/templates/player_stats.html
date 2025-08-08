@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Player Stats</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        .card {
+            margin-top: 30px;
+            border: 1px solid #ccc;
+            padding: 20px 30px;
+            border-radius: 12px;
+            max-width: 600px; /* Reduced width since no bio */
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: left;
+        }
+        .player-image {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        .stats-section {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .stats-section h2 {
+            margin-bottom: 12px;
+            margin-top: 0;
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+        .stats-section p {
+            margin: 0;
+            font-size: 1rem;
+            color: #34495e;
+        }
+
+        /* Responsive for smaller screens */
+        @media (max-width: 700px) {
+            .card {
+                max-width: 90%;
+                padding: 15px 20px;
+            }
+            .player-image {
+                margin-left: auto;
+                margin-right: auto;
+                display: block;
+            }
+            .stats-section {
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏏 Player Stats Viewer</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/player-stats/">Player Stats</a>
+            <a href="/player-comparison/">Player Comparison</a>
+            <a href="/prediction/">Match Prediction</a>
+        </nav>
+    </header>
+
+    <main style="padding: 30px; text-align: center;">
+        <form method="POST">
+            {% csrf_token %}
+            <label for="player_name">Choose a player:</label>
+            <select name="player_name" id="player_name" required>
+                {% for name in players %}
+                    <option value="{{ name }}" {% if selected_player and selected_player.name == name %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="format">Choose format:</label>
+            <select name="format" id="format" required>
+                {% for fmt in formats %}
+                    <option value="{{ fmt }}" {% if selected_format == fmt %}selected{% endif %}>{{ fmt }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">View Stats</button>
+        </form>
+
+        {% if selected_player %}
+            <div class="card">
+                <div class="stats-section">
+                    {% if image_url %}
+                        <img src="{% static image_url %}" alt="{{ selected_player.name }}" class="player-image">
+                    {% endif %}
+                    <h2>{{ selected_player.name }} ({{ selected_player.format }})</h2>
+                    <p><strong>Team:</strong> {{ selected_player.team }}</p>
+                    <p><strong>Matches:</strong> {{ selected_player.matches }}</p>
+                    <p><strong>Runs:</strong> {{ selected_player.runs }}</p>
+                    <p><strong>Wickets:</strong> {{ selected_player.wickets }}</p>
+                    <p><strong>Average:</strong> {{ selected_player.average }}</p>
+                    <p><strong>Strike Rate:</strong> {{ selected_player.strike_rate }}</p>
+                    <p><strong>Centuries:</strong> {{ selected_player.centuries }}</p>
+                    <p><strong>Fifties:</strong> {{ selected_player.fifties }}</p>
+                </div>
+            </div>
+        {% endif %}
+    </main>
+</body>
+</html>

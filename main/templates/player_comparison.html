@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player Comparison</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>🏏 Player Comparison</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/player-stats/">Player Stats</a>
+            <a href="/player-comparison/">Player Comparison</a>
+            <a href="/prediction/">Match Prediction</a>
+        </nav>
+    </header>
+
+    <main style="padding: 30px; text-align: center;">
+        <form method="POST">
+            {% csrf_token %}
+            <label for="player1">Player 1:</label>
+            <select name="player1" id="player1" required>
+                <option value="" disabled {% if not selected_players or selected_players|length < 1 %}selected{% endif %}>-- Select --</option>
+                {% for name in player_names %}
+                    <option value="{{ name }}" {% if selected_players|length >= 1 and selected_players.0.0.name == name %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="player2">Player 2:</label>
+            <select name="player2" id="player2" required>
+                <option value="" disabled {% if selected_players|length < 2 %}selected{% endif %}>-- Select --</option>
+                {% for name in player_names %}
+                    <option value="{{ name }}" {% if selected_players|length >= 2 and selected_players.1.0.name == name %}selected{% endif %}>{{ name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="format">Choose format:</label>
+            <select name="format" id="format" required>
+                {% for fmt in formats %}
+                    <option value="{{ fmt }}" {% if selected_format == fmt %}selected{% endif %}>{{ fmt }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Compare</button>
+        </form>
+
+        {% if selected_players %}
+            <div class="comparison" style="display: flex; justify-content: center; gap: 40px; margin-top: 30px;">
+                {% for player, img_url in selected_players %}
+                    <div class="card" style="border: 1px solid #ccc; padding: 20px; width: 280px; border-radius: 10px;">
+                        {% if img_url %}
+                            <img src="{% static img_url %}" alt="{{ player.name }}" style="width: 180px; height: auto; border-radius: 10px; margin-bottom: 20px;">
+                        {% endif %}
+                        <h2>{{ player.name }} ({{ player.format }})</h2>
+                        <p><strong>Team:</strong> {{ player.team }}</p>
+                        <p><strong>Matches:</strong> {{ player.matches }}</p>
+                        <p><strong>Runs:</strong> {{ player.runs }}</p>
+                        <p><strong>Wickets:</strong> {{ player.wickets }}</p>
+                        <p><strong>Average:</strong> {{ player.average }}</p>
+                        <p><strong>Strike Rate:</strong> {{ player.strike_rate }}</p>
+                        <p><strong>Centuries:</strong> {{ player.centuries }}</p>
+                        <p><strong>Fifties:</strong> {{ player.fifties }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </main>
+</body>
+</html>

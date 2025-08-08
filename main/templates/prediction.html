@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Match Prediction</title>
+    
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+    <header>
+        <h1>🏏 Match Predictor</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/player-stats/">Player Stats</a>
+            <a href="/player-comparison/">Player Comparison</a>
+            <a href="/prediction/">Match Prediction</a>
+        </nav>
+    </header>
+
+    <main style="padding: 30px; text-align: center;">
+        <h2>Predict Match Outcome</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <label for="team1">Team 1:</label>
+            <select name="team1" required>
+                {% for team in teams %}
+                    <option value="{{ team }}">{{ team }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="team2">Team 2:</label>
+            <select name="team2" required>
+                {% for team in teams %}
+                    <option value="{{ team }}">{{ team }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="venue">Venue:</label>
+            <select name="venue" required>
+                {% for v in venues %}
+                    <option value="{{ v }}">{{ v }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="toss">Toss Winner:</label>
+            <select name="toss" required>
+                {% for team in teams %}
+                    <option value="{{ team }}">{{ team }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="decision">Toss Decision:</label>
+            <select name="decision" required>
+                <option value="bat">Bat</option>
+                <option value="bowl">Bowl</option>
+            </select>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction %}
+            <div style="margin-top: 30px;">
+                <h3>🏆 Predicted Winner: <strong>{{ prediction }}</strong></h3>
+            </div>
+        {% endif %}
+    </main>
+</body>
+</html>
